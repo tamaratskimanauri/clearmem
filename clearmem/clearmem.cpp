@@ -5,6 +5,7 @@
 #include <windows.h>
 #include <SFML/Audio.hpp>
 #include "clearmem.h"
+#include "txtr.h"
 
 using namespace sf;
 using namespace std;
@@ -15,15 +16,11 @@ using namespace std;
     \param sml_t - строковый массив, использующийся для сравнения карточек друг с другом
 */
 
-
-int lenght = 154, width = 119; /* @param lenght, width : размеры окна*/
 float frm = 0; /*@param frm : кадры в игре*/
 /*@param f_lenght, f_width : вспомогательные параметры, делящие окно на ячейки, согласно размерам текстуры рамки */
-int f_lenght = lenght / 7;
-int f_width = width / 7;
+
 /*@param b_lenght, b_width : вспомогательные параметры, делящие окно на ячейки, согласно размерам карточек */
-int b_lenght = (lenght - 14) / 35;
-int b_width = (width - 14) / 35;
+
 
 String tabl[4] =
 {
@@ -59,109 +56,8 @@ String sml_t[4] =
 @function addsprites
 устанавливает текстуры спрайтам при помощи метода .setTexture()
 */
-class texture {
-public:
-	Texture person1, person2, person3, person4, person5, person6, frame, tt, background;
-	void addtexture() {
-		person1.loadFromFile("Fonts\\Cat 01-2.png");
-		person2.loadFromFile("Fonts\\Cat 01-3.png");
-		person3.loadFromFile("Fonts\\Dog 01-3.png");
-		person4.loadFromFile("Fonts\\Dog 01-2.png");
-		person5.loadFromFile("Fonts\\Dog 01-1.png");
-		person6.loadFromFile("Fonts\\Cat 01-1.png");
-		frame.loadFromFile("Fonts\\frame.png");
-		background.loadFromFile("Fonts\\back.png");
-		tt.loadFromFile("Fonts\\shirt.png");
-	}
-		
 
-	Sprite Person1, Person2, Person3, Person4, Person5, Person6, Frame, TT, Background;
-	void addsprites() {
-		Person1.setTexture(person1);
-		Person1.setTextureRect(IntRect(32, 0, 32, 32));
-		Person2.setTexture(person2);
-		Person2.setTextureRect(IntRect(32, 0, 32, 32));
-		Person3.setTexture(person3);
-		Person3.setTextureRect(IntRect(32, 0, 32, 32));
-		Person4.setTexture(person4);
-		Person4.setTextureRect(IntRect(32, 0, 32, 32));
-		Person5.setTexture(person5);
-		Person5.setTextureRect(IntRect(32, 0, 32, 32));
-		Person6.setTexture(person6);
-		Person6.setTextureRect(IntRect(32, 0, 32, 32));
-		Frame.setTexture(frame);
-		TT.setTexture(tt);
-		Background.setTexture(background);
-	}
-
-	void FRAME(RenderWindow &wn) {
-		for (int i = 0; i < f_lenght; i++) {
-			for (int j = 0; j < f_width; j++) {
-				Frame.setPosition(i * 7, j * 7);
-				if (i == 0 || j == 0 || i == f_lenght - 1 || j == f_width - 1)/*условие, фильтрующее расположение рамки*/
-					wn.draw(Frame);
-			}
-		}
-	}
-	/*установка фоновых рубашек*/
-	void BCKG(RenderWindow &wn) {
-		for (int i = 0; i < b_lenght; i++) {
-			for (int j = 0; j < b_width; j++) {
-				Background.setPosition(i * 35 + 7, j * 35 + 7);
-				wn.draw(Background);
-			}
-		}
-	}
-	/*отрисовка персонажей
-		условиями if определяется тип необходимого персонажа*/
-	void SPAWN(RenderWindow& wn) {
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 3; j++) {
-				Person1.setPosition(i * 35 + 8, j * 35 + 9);/*установка расположения персонажей*/
-				Person2.setPosition(i * 35 + 8, j * 35 + 9);
-				Person3.setPosition(i * 35 + 8, j * 35 + 9);
-				Person4.setPosition(i * 35 + 8, j * 35 + 9);
-				Person5.setPosition(i * 35 + 8, j * 35 + 9);
-				Person6.setPosition(i * 35 + 8, j * 35 + 9);
-
-				if (tabl[i][j] == 'a' || tabl[i][j] == 'A') {
-					wn.draw(Person1); /*отрисовка персонажа1*/
-				}
-				if (tabl[i][j] == 'b' || tabl[i][j] == 'B')
-				{
-					wn.draw(Person2);/*отрисовка персонажа 2*/
-				}
-				if (tabl[i][j] == 'c' || tabl[i][j] == 'C') {
-					wn.draw(Person3);/*отрисовка персонажа 2*/
-				}
-				if (tabl[i][j] == 'y' || tabl[i][j] == 'Y') {
-					wn.draw(Person4); /*отрисовка персонажа1*/
-				}
-				if (tabl[i][j] == 'k' || tabl[i][j] == 'K')
-				{
-					wn.draw(Person5);/*отрисовка персонажа 2*/
-				}
-				if (tabl[i][j] == 'l' || tabl[i][j] == 'L') {
-					wn.draw(Person6);/*отрисовка персонажа 2*/
-				}
-			}
-		};
-	}
-	/*отрисовка верхних рубашек
-		условиями if определяется необходимость появления верхних рубашек*/
-	void FRGG(RenderWindow& wn) {
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 3; j++) {
-				TT.setPosition(i * 35 + 7, j * 35 + 7); /*установка расположения верхних рубашек*/
-				if (tabl[i][j] == 'a' || tabl[i][j] == 'b' || tabl[i][j] == 'c' ||
-					tabl[i][j] == 'y' || tabl[i][j] == 'k' || tabl[i][j] == 'l') {
-					wn.draw(TT);/*отрисовка верхних руюашек*/
-				}
-			}
-		};
-	}
-};
-
+	
 
 int main()
 {
@@ -190,8 +86,8 @@ int main()
 
 		aadd.FRAME(wn);
 		aadd.BCKG(wn);
-		aadd.SPAWN(wn);
-		aadd.FRGG(wn);
+		aadd.SPAWN(wn, tabl);
+		aadd.FRGG(wn, tabl);
 		/*@param X_Pos, Y_Pos, Win_X1, Win_Y1, Win_X2, Win_Y2
 		X_Pos, Y_Pos : координаты курсора
 		Win_X1, Win_Y1, Win_X2, Win_Y2 : координаты вершин карточек*/

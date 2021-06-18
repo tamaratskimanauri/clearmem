@@ -14,5 +14,10 @@ include(cmake/Catch.cmake)
 include(cmake/CompilerWarnings.cmake) 
 set_project_warnings(default)
 
+enable_testing()
+add_subdirectory(external/doctest) 
+include(external/doctest/doctest.cmake)
+include_directories(external/doctest)
+
 # Включите подпроекты.
 add_subdirectory ("clearmem")

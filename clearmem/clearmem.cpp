@@ -23,37 +23,37 @@ using namespace std;
 */
 class texture {
 public:
-	Texture person1, person2, person3, frame, tt, background;
-
+	Texture person1, person2, person3, person4, person5, person6, frame, tt, background;
 	void addtexture() {
 		person1.loadFromFile("Fonts\\Cat 01-2.png");
 		person2.loadFromFile("Fonts\\Cat 01-3.png");
 		person3.loadFromFile("Fonts\\Dog 01-3.png");
+		person4.loadFromFile("Fonts\\Dog 01-2.png");
+		person5.loadFromFile("Fonts\\Dog 01-1.png");
+		person6.loadFromFile("Fonts\\Cat 01-1.png");
 		frame.loadFromFile("Fonts\\frame.png");
 		background.loadFromFile("Fonts\\back.png");
 		tt.loadFromFile("Fonts\\shirt.png");
 	}
 
-	Sprite Person1, Person2, Person3, Frame, TT, Background;
+	Sprite Person1, Person2, Person3, Person4, Person5, Person6, Frame, TT, Background;
 	void addsprites() {
-
 		Person1.setTexture(person1);
 		Person1.setTextureRect(IntRect(32, 0, 32, 32));
-
 		Person2.setTexture(person2);
 		Person2.setTextureRect(IntRect(32, 0, 32, 32));
-
 		Person3.setTexture(person3);
 		Person3.setTextureRect(IntRect(32, 0, 32, 32));
-
+		Person4.setTexture(person4);
+		Person4.setTextureRect(IntRect(32, 0, 32, 32));
+		Person5.setTexture(person5);
+		Person5.setTextureRect(IntRect(32, 0, 32, 32));
+		Person6.setTexture(person6);
+		Person6.setTextureRect(IntRect(32, 0, 32, 32));
 		Frame.setTexture(frame);
-
 		TT.setTexture(tt);
-
 		Background.setTexture(background);
 	}
-
-
 };
 /*@param tabl[4], tabl_m[4]
 строковые массивы, отвечающие за расположение персонажей и обложек карточек
@@ -63,17 +63,17 @@ public:
 */
 String tabl[4] =
 {
-"cca",
-"aaa",
-"ccb",
-"bbb",
+"cya",
+"yak",
+"lcb",
+"bkl",
 };
 String tabl_m[4] =
 {
-"cca",
-"aaa",
-"ccb",
-"bbb",
+"cya",
+"yak",
+"lcb",
+"bkl",
 };
 String sml_t[4] =
 {
@@ -82,7 +82,6 @@ String sml_t[4] =
 "   ",
 "   ",
 };
-
 
 int main()
 {
@@ -98,7 +97,6 @@ int main()
 	int lenght = 154, width = 119; /* @param lenght, width : размеры окна*/
 	RenderWindow window(VideoMode(lenght, width), "memorize");/* создание объекта класса RenderWindow
 																@param Window : объект, в котором отображается 2d графика*/
-
 	Clock clock; /*@param clock : переменная времени */
 
 	texture aadd; /*@param aadd : объект класса Текстуры*/
@@ -106,7 +104,6 @@ int main()
 	aadd.addsprites(); /*@method .addsprites : метод загрузки спрайтов */
 
 	float frm = 0; /*@param frm : кадры в игре*/
-
 
 	/*@param f_lenght, f_width : вспомогательные параметры, делящие окно на ячейки, согласно размерам текстуры рамки */
 	int f_lenght = lenght / 7;
@@ -119,18 +116,18 @@ int main()
 	int a = -1, b = -1, c = -1, d = -1;
 	bool o = 1;/*@param o : доп.параметр для различающихся карточек*/
 
-
 	while (window.isOpen())/*цикл, работающий пока окно открыто*/
 	{
 		float time = clock.getElapsedTime().asMilliseconds(); /*@param time : переменная, в которую загружается время; @method .getElapsedTime().asMilliseconds() : дают прошедшее время в миллисекундах*/
 		clock.restart(); /*@method .restsrt : обновление времени*/
 		frm += 0.01 * time; /*количество прошедших кадров*/
-
 		if (frm > 3) frm = frm - 3; /*создание анимации*/
 		aadd.Person1.setTextureRect(IntRect(0 + 32 * int(frm), 0, 32, 32)); /*@method .setTextureRect() : установка необходимой текстуры спрайта*/
 		aadd.Person2.setTextureRect(IntRect(0 + 32 * int(frm), 0, 32, 32)); /*@param IntRect : выбори необходимой области текстуры*/
 		aadd.Person3.setTextureRect(IntRect(0 + 32 * int(frm), 0, 32, 32));
-
+		aadd.Person4.setTextureRect(IntRect(0 + 32 * int(frm), 0, 32, 32)); 
+		aadd.Person5.setTextureRect(IntRect(0 + 32 * int(frm), 0, 32, 32));
+		aadd.Person6.setTextureRect(IntRect(0 + 32 * int(frm), 0, 32, 32));
 		window.clear(Color(50, 50, 123, 0)); /*@method .clear() : очистка окна и задание цвета*/
 
 		/*создание рамки
@@ -141,7 +138,6 @@ int main()
 				aadd.Frame.setPosition(i * 7, j * 7);
 				if (i == 0 || j == 0 || i == f_lenght - 1 || j == f_width - 1)/*условие, фильтрующее расположение рамки*/
 					window.draw(aadd.Frame);
-
 			}
 		}
 		/*установка фоновых рубашек
@@ -151,7 +147,6 @@ int main()
 			for (int j = 0; j < b_width; j++) {
 				aadd.Background.setPosition(i * 35 + 7, j * 35 + 7);
 				window.draw(aadd.Background);
-
 			}
 		}
 
@@ -162,6 +157,10 @@ int main()
 				aadd.Person1.setPosition(i * 35 + 8, j * 35 + 9);/*установка расположения персонажей*/
 				aadd.Person2.setPosition(i * 35 + 8, j * 35 + 9);
 				aadd.Person3.setPosition(i * 35 + 8, j * 35 + 9);
+				aadd.Person4.setPosition(i * 35 + 8, j * 35 + 9);
+				aadd.Person5.setPosition(i * 35 + 8, j * 35 + 9);
+				aadd.Person6.setPosition(i * 35 + 8, j * 35 + 9);
+				
 				if (tabl[i][j] == 'a' || tabl[i][j] == 'A') {
 					window.draw(aadd.Person1); /*отрисовка персонажа1*/
 				}
@@ -172,30 +171,35 @@ int main()
 				if (tabl[i][j] == 'c' || tabl[i][j] == 'C') {
 					window.draw(aadd.Person3);/*отрисовка персонажа 2*/
 				}
+				if (tabl[i][j] == 'y' || tabl[i][j] == 'Y') {
+					window.draw(aadd.Person4); /*отрисовка персонажа1*/
+				}
+				if (tabl[i][j] == 'k' || tabl[i][j] == 'K')
+				{
+					window.draw(aadd.Person5);/*отрисовка персонажа 2*/
+				}
+				if (tabl[i][j] == 'l' || tabl[i][j] == 'L') {
+					window.draw(aadd.Person6);/*отрисовка персонажа 2*/
+				}
 			}
 		};
-
 
 		/*отрисовка верхних рубашек
 		условиями if определяется необходимость появления верхних рубашек*/
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 3; j++) {
 				aadd.TT.setPosition(i * 35 + 7, j * 35 + 7); /*установка расположения верхних рубашек*/
-
-				if (tabl[i][j] == 'a' || tabl[i][j] == 'b' || tabl[i][j] == 'c') {
+				if (tabl[i][j] == 'a' || tabl[i][j] == 'b' || tabl[i][j] == 'c' ||
+					tabl[i][j] == 'y' || tabl[i][j] == 'k' || tabl[i][j] == 'l') {
 					window.draw(aadd.TT);/*отрисовка верхних руюашек*/
 				}
-
-
 			}
 		};
-
 
 		/*@param X_Pos, Y_Pos, Win_X1, Win_Y1, Win_X2, Win_Y2
 		X_Pos, Y_Pos : координаты курсора
 		Win_X1, Win_Y1, Win_X2, Win_Y2 : координаты вершин карточек*/
 		float X_Pos, Y_Pos, Win_X1, Win_Y1, Win_X2, Win_Y2;
-
 
 		Event event; /*@param event : переменная событий в окне*/
 		/*цикл, перебирающий все события в окне
@@ -208,89 +212,91 @@ int main()
 			}
 			else if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left) /*обработка события нажатия левой кнопки мыши*/
 			{
-
 				X_Pos = Mouse::getPosition(window).x;/*@method Mouse::getPosition(window) : считывание координат курсора в окне*/
 				Y_Pos = Mouse::getPosition(window).y;
-
 				for (int i = 0; i < 4; i++)
 				{
 					for (int j = 0; j < 3; j++)
 					{
-
-						Win_X1 = (7 + 35 * i) * (window.getSize().x / lenght);
-						Win_Y1 = (7 + 35 * j) * (window.getSize().y / width);
-
+						/* масштабирование координат плиток*/
+						Win_X1 = (7 + 35 * i) * (window.getSize().x / lenght); /*@method .getSize : получение размеров окна*/
+						Win_Y1 = (7 + 35 * j) * (window.getSize().y / width); /* "/ lenght(width)" : отношение текущего и первоначального размера окна*/
 						Win_X2 = (42 + 35 * i) * (window.getSize().x / lenght);
 						Win_Y2 = (42 + 35 * j) * (window.getSize().y / width);
-						if ((X_Pos > Win_X1) && (X_Pos < Win_X2) && (Y_Pos > Win_Y1) && (Y_Pos < Win_Y2))
+						/*цикл взаимодействия с карточками*/
+						if ((X_Pos > Win_X1) && (X_Pos < Win_X2) && (Y_Pos > Win_Y1) && (Y_Pos < Win_Y2))/*условие опрделения положения курсора относительно карточек(внутри/снаружи)*/
 						{
-							//shoot.play();
-
+							//shoot.play(); 
+							/*циклы открытия карточек*/
 							if (tabl[i][j] == 'a') tabl[i][j] = 'A';
 							if (tabl[i][j] == 'b') tabl[i][j] = 'B';
 							if (tabl[i][j] == 'c') tabl[i][j] = 'C';
-
-							if (((tabl[i][j] == 'A') || (tabl[i][j] == 'B') || (tabl[i][j] == 'C')) && a == -1)
+							if (tabl[i][j] == 'y') tabl[i][j] = 'Y';
+							if (tabl[i][j] == 'l') tabl[i][j] = 'L';
+							if (tabl[i][j] == 'k') tabl[i][j] = 'K';
+							if (((tabl[i][j] == 'A') || (tabl[i][j] == 'B') || (tabl[i][j] == 'C')
+								|| (tabl[i][j] == 'K') || (tabl[i][j] == 'L') || (tabl[i][j] == 'Y')) && a == -1) /*условие открытия первой карточки*/
 							{
+								/*присваивание текущего номера карточки*/
 								a = i;
 								b = j;
-
-								sml_t[a][b] = tabl[i][j];
-								cout << "pppp";
+								sml_t[a][b] = tabl[i][j]; /*запоминание номера первой открытой карточки*/
 							}
-							else if ((tabl[i][j] == 'A') || (tabl[i][j] == 'B') || (tabl[i][j] == 'C'))
+							else if ((tabl[i][j] == 'A') || (tabl[i][j] == 'B') || (tabl[i][j] == 'C') ||
+								 (tabl[i][j] == 'K') || (tabl[i][j] == 'L') || (tabl[i][j] == 'Y'))/*условие открытия второй карточки*/
 							{
+								/*присваивание текущего номера карточки*/
 								c = i;
 								d = j;
-								sml_t[c][d] = tabl[i][j];
-								cout << "aaaa";
-
-
-								if (sml_t[a][b] == sml_t[c][d])
+								sml_t[c][d] = tabl[i][j]; /*запоминание номера второй открытой карточки*/
+								/*сравнение карточек*/
+								if (sml_t[a][b] == sml_t[c][d]) /*условие идентичности карточек*/
 								{
+									/*незакрывание идентичных персонажей */
 									if (tabl[a][b] == 'a') tabl[a][b] = 'A';
 									if (tabl[a][b] == 'b') tabl[a][b] = 'B';
 									if (tabl[a][b] == 'c') tabl[a][b] = 'C';
+									if (tabl[a][b] == 'y') tabl[a][b] = 'Y';
+									if (tabl[a][b] == 'l') tabl[a][b] = 'L';
+									if (tabl[a][b] == 'k') tabl[a][b] = 'K';
 									if (tabl[c][d] == 'a') tabl[c][d] = 'A';
 									if (tabl[c][d] == 'b') tabl[c][d] = 'B';
 									if (tabl[c][d] == 'c') tabl[c][d] = 'C';
-
+									if (tabl[c][d] == 'y') tabl[c][d] = 'Y';
+									if (tabl[c][d] == 'l') tabl[c][d] = 'L';
+									if (tabl[c][d] == 'k') tabl[c][d] = 'K';
 								}
-								else {
-									if (o == 1) {
+								else { /*условие различности персонажей*/
+									if (o == 1) { /*условие открытия различных карточек*/
 										if (tabl[a][b] == 'a') tabl[a][b] = 'A';
 										if (tabl[a][b] == 'b') tabl[a][b] = 'B';
 										if (tabl[a][b] == 'c') tabl[a][b] = 'C';
+										if (tabl[a][b] == 'y') tabl[a][b] = 'Y';
+										if (tabl[a][b] == 'l') tabl[a][b] = 'L';
+										if (tabl[a][b] == 'k') tabl[a][b] = 'K';
 										if (tabl[c][d] == 'a') tabl[c][d] = 'A';
 										if (tabl[c][d] == 'b') tabl[c][d] = 'B';
 										if (tabl[c][d] == 'c') tabl[c][d] = 'C';
+										if (tabl[c][d] == 'y') tabl[c][d] = 'Y';
+										if (tabl[c][d] == 'l') tabl[c][d] = 'L';
+										if (tabl[c][d] == 'k') tabl[c][d] = 'K';
 										o = 0;
 									}
-									else {
+									else { /*условие закрытия различных карточек*/
 										tabl[a][b] = tabl_m[a][b];
 										tabl[c][d] = tabl_m[c][d];
 										o = 1;
 									}
-
 								}
 								a = -1;
 								b = -1;
-
 							}
-
-
-						}
-						aadd.TT.setPosition(i * 35 + 7, j * 35 + 7);
-
-						if (tabl[i][j] == 'a' || tabl[i][j] == 'b' || tabl[i][j] == 'c') {
-							window.draw(aadd.TT);
 						}
 					}
 				}
 			}
 		}
-
-		window.display(); // отрисовка окна
+		window.display(); /*Отрисовка окна*/
 	};
 	return 0;
 }

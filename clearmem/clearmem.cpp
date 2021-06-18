@@ -4,17 +4,27 @@
 #include <ctime> 
 #include <windows.h>
 #include <SFML/Audio.hpp>
+#include "clearmem.h"
 
 using namespace sf;
 using namespace std;
 
 
-/*@param tabl[4], tabl_m[4]
-строковые массивы, отвечающие за расположение персонажей и обложек карточек
+/* \param tabl[4], tabl_m[4] - строковые массивы, отвечающие за расположение персонажей и обложек карточек
 
-@param sml_t
- строковый массив, использующийся для сравнения карточек друг с другом
+    \param sml_t - строковый массив, использующийся для сравнения карточек друг с другом
 */
+
+
+int lenght = 154, width = 119; /* @param lenght, width : размеры окна*/
+float frm = 0; /*@param frm : кадры в игре*/
+/*@param f_lenght, f_width : вспомогательные параметры, делящие окно на ячейки, согласно размерам текстуры рамки */
+int f_lenght = lenght / 7;
+int f_width = width / 7;
+/*@param b_lenght, b_width : вспомогательные параметры, делящие окно на ячейки, согласно размерам карточек */
+int b_lenght = (lenght - 14) / 35;
+int b_width = (width - 14) / 35;
+
 String tabl[4] =
 {
 "cya",
@@ -36,19 +46,6 @@ String sml_t[4] =
 "   ",
 "   ",
 };
-
-int lenght = 154, width = 119; /* @param lenght, width : размеры окна*/
-float frm = 0; /*@param frm : кадры в игре*/
-/*@param f_lenght, f_width : вспомогательные параметры, делящие окно на ячейки, согласно размерам текстуры рамки */
-int f_lenght = lenght / 7;
-int f_width = width / 7;
-/*@param b_lenght, b_width : вспомогательные параметры, делящие окно на ячейки, согласно размерам карточек */
-int b_lenght = (lenght - 14) / 35;
-int b_width = (width - 14) / 35;
-/* @param a,b,c,d : переменные для сравнения карточек*/
-int a = -1, b = -1, c = -1, d = -1;
-bool o = 1;/*@param o : доп.параметр для различающихся карточек*/
-
 
 
 /*Класс загрузки текстур и спрайтов
@@ -76,6 +73,7 @@ public:
 		background.loadFromFile("Fonts\\back.png");
 		tt.loadFromFile("Fonts\\shirt.png");
 	}
+		
 
 	Sprite Person1, Person2, Person3, Person4, Person5, Person6, Frame, TT, Background;
 	void addsprites() {
@@ -164,57 +162,9 @@ public:
 	}
 };
 
-void CHECK(String sml_t[4], String tabl[4], String tabl_m[4]) {
-	if (sml_t[a][b] == sml_t[c][d]) /*условие идентичности карточек*/
-	{
-		/*незакрывание идентичных персонажей */
-		if (tabl[a][b] == 'a') tabl[a][b] = 'A';
-		if (tabl[a][b] == 'b') tabl[a][b] = 'B';
-		if (tabl[a][b] == 'c') tabl[a][b] = 'C';
-		if (tabl[a][b] == 'y') tabl[a][b] = 'Y';
-		if (tabl[a][b] == 'l') tabl[a][b] = 'L';
-		if (tabl[a][b] == 'k') tabl[a][b] = 'K';
-		if (tabl[c][d] == 'a') tabl[c][d] = 'A';
-		if (tabl[c][d] == 'b') tabl[c][d] = 'B';
-		if (tabl[c][d] == 'c') tabl[c][d] = 'C';
-		if (tabl[c][d] == 'y') tabl[c][d] = 'Y';
-		if (tabl[c][d] == 'l') tabl[c][d] = 'L';
-		if (tabl[c][d] == 'k') tabl[c][d] = 'K';
-	}
-	else { /*условие различности персонажей*/
-		if (o == 1) { /*условие открытия различных карточек*/
-			if (tabl[a][b] == 'a') tabl[a][b] = 'A';
-			if (tabl[a][b] == 'b') tabl[a][b] = 'B';
-			if (tabl[a][b] == 'c') tabl[a][b] = 'C';
-			if (tabl[a][b] == 'y') tabl[a][b] = 'Y';
-			if (tabl[a][b] == 'l') tabl[a][b] = 'L';
-			if (tabl[a][b] == 'k') tabl[a][b] = 'K';
-			if (tabl[c][d] == 'a') tabl[c][d] = 'A';
-			if (tabl[c][d] == 'b') tabl[c][d] = 'B';
-			if (tabl[c][d] == 'c') tabl[c][d] = 'C';
-			if (tabl[c][d] == 'y') tabl[c][d] = 'Y';
-			if (tabl[c][d] == 'l') tabl[c][d] = 'L';
-			if (tabl[c][d] == 'k') tabl[c][d] = 'K';
-			o = 0;
-		}
-		else { /*условие закрытия различных карточек*/
-			tabl[a][b] = tabl_m[a][b];
-			tabl[c][d] = tabl_m[c][d];
-			o = 1;
-		}
-	}
-}
 
 int main()
 {
-	//Music music; /*@param music : переменная, в которую загружается музыкальный файл */
-	//music.openFromFile("C:\\Users\\79529\\project\\Project1\\Фон1.ogg"); /*загрузка музыкального файла*/
-	//music.play(); /*проигрывание музыкального файла*/
-	//music.setLoop(true); /*вулючение повтора музыки*/
-
-	//SoundBuffer shootBuffer;/*@param shootBuffer : буфер для звука*/
-	//shootBuffer.loadFromFile("C:\\Users\\79529\\project\\Project1\\Нажатие.ogg");/*загружаем в буфер звук*/
-	//Sound shoot(shootBuffer);/*создание звука и загрузка в него параметра*/
 	RenderWindow window(VideoMode(lenght, width), "memorize");/* создание объекта класса RenderWindow
 																@param Window : объект, в котором отображается 2d графика*/
 	RenderWindow& wn = window;
@@ -274,12 +224,8 @@ int main()
 						{
 							//shoot.play(); 
 							/*циклы открытия карточек*/
-							if (tabl[i][j] == 'a') tabl[i][j] = 'A';
-							if (tabl[i][j] == 'b') tabl[i][j] = 'B';
-							if (tabl[i][j] == 'c') tabl[i][j] = 'C';
-							if (tabl[i][j] == 'y') tabl[i][j] = 'Y';
-							if (tabl[i][j] == 'l') tabl[i][j] = 'L';
-							if (tabl[i][j] == 'k') tabl[i][j] = 'K';
+							OPEN(tabl, i, j);
+
 							if (((tabl[i][j] == 'A') || (tabl[i][j] == 'B') || (tabl[i][j] == 'C')
 								|| (tabl[i][j] == 'K') || (tabl[i][j] == 'L') || (tabl[i][j] == 'Y')) && a == -1) /*условие открытия первой карточки*/
 							{
@@ -296,7 +242,7 @@ int main()
 								d = j;
 								sml_t[c][d] = tabl[i][j]; /*запоминание номера второй открытой карточки*/
 								/*сравнение карточек*/
-								CHECK(sml_t, tabl, tabl_m);
+								CHEECK(sml_t, tabl, tabl_m);
 								a = -1;
 								b = -1;
 							}

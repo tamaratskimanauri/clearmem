@@ -9,4 +9,3 @@ include(doctest.cmake)
 
 add_library(doctest::doctest ALIAS doctest)
 add_library(Catch2::Catch2 ALIAS doctest)
-add_executable(tests ../../clearmem/clearmem_test.cpp)

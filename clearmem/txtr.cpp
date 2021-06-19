@@ -1,12 +1,15 @@
 #include "txtr.h"
 
-int lenght = 154, width = 119;
-int f_lenght = lenght / 7;
-int f_width = width / 7;
-int b_lenght = (lenght - 14) / 35;
+int lenght = 154; /// <param name="lenght"> - длина окна </param>
+int width = 119; 
+int f_lenght = lenght / 7; 
+int f_width = width / 7; 
+int b_lenght = (lenght - 14) / 35; 
 int b_width = (width - 14) / 35;
 
-
+/// <summary>
+/// загрузка текстур
+/// </summary>
 void texture::addtexture() {
 	person1.loadFromFile("Fonts\\Cat 01-2.png");
 	person2.loadFromFile("Fonts\\Cat 01-3.png");
@@ -18,7 +21,9 @@ void texture::addtexture() {
 	background.loadFromFile("Fonts\\back.png");
 	tt.loadFromFile("Fonts\\shirt.png");
 }
-
+/// <summary>
+/// загрузка спрайтов
+/// </summary>
 void texture::addsprites() {
 	Person1.setTexture(person1);
 	Person1.setTextureRect(IntRect(32, 0, 32, 32));
@@ -36,7 +41,10 @@ void texture::addsprites() {
 	TT.setTexture(tt);
 	Background.setTexture(background);
 }
-
+/// <summary>
+/// отрисовка рамки
+/// </summary>
+/// <param name="wn">- окно </param>
 void texture::FRAME(RenderWindow& wn) {
 	for (int i = 0; i < f_lenght; i++) {
 		for (int j = 0; j < f_width; j++) {
@@ -46,7 +54,10 @@ void texture::FRAME(RenderWindow& wn) {
 		}
 	}
 }
-/*установка фоновых рубашек*/
+/// <summary>
+/// отрисовка фоновых рубашек
+/// </summary>
+/// <param name="wn">- окно </param>
 void texture::BCKG(RenderWindow& wn) {
 	for (int i = 0; i < b_lenght; i++) {
 		for (int j = 0; j < b_width; j++) {
@@ -55,8 +66,11 @@ void texture::BCKG(RenderWindow& wn) {
 		}
 	}
 }
-/*отрисовка персонажей
-	условиями if определяется тип необходимого персонажа*/
+/// <summary>
+/// отрисовка персонажей
+/// </summary>
+/// <param name="wn">- окно </param>
+/// <param name="tabl">- таблица карты </param>
 void texture::SPAWN(RenderWindow& wn, sf::String tabl[4]) {
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 3; j++) {
@@ -90,8 +104,11 @@ void texture::SPAWN(RenderWindow& wn, sf::String tabl[4]) {
 		}
 	};
 }
-/*отрисовка верхних рубашек
-	условиями if определяется необходимость появления верхних рубашек*/
+/// <summary>
+/// отрисовка верхних рубашек
+/// </summary>
+/// <param name="wn"> - окно </param>
+/// <param name="tabl"> - таблица карты </param>
 void texture::FRGG(RenderWindow& wn, sf::String tabl[4]) {
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 3; j++) {
